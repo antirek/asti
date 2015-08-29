@@ -1,0 +1,24 @@
+{
+  "name": "call-via-asterisk",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antirek/call-via-asterisk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antirek/call-via-asterisk/issues"
+  },
+  "homepage": "https://github.com/antirek/call-via-asterisk",
+  "dependencies": {
+    "asterisk-manager": "^0.1.15",
+    "node-simple-router": "^0.9.4-2",
+    "q": "^1.4.1"
+  }
+}
