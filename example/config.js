@@ -1,5 +1,5 @@
 module.exports = {
-  node: {
+  asterisk: {
     port: 5038,
     host: 'localhost',
     username: 'admin',

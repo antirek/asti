@@ -19,6 +19,7 @@
   "homepage": "https://github.com/antirek/asti",
   "dependencies": {
     "asterisk-manager": "^0.1.15",
+    "joi": "^6.6.1",
     "node-simple-router": "^0.9.4-2",
     "q": "^1.4.1"
   }

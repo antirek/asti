@@ -3,10 +3,16 @@ var AsteriskManager = require('asterisk-manager');
 var Router = require('node-simple-router');
 var http = require('http');
 var Q = require('q');
+var ConfigSchema = require('./lib/configSchema');
+var Joi = require('joi');
 
-var Server = function (config) {  
-  var ami = new AsteriskManager(config.node.port, config.node.host, config.node.username, config.node.password, true);
+var Server = function (config) {
+  var ami = new AsteriskManager(config.asterisk.port, config.asterisk.host, config.asterisk.username, config.asterisk.password, true);
   ami.keepConnected();
+
+  var validate = function (callback) {
+    Joi.validate(config, ConfigSchema, callback);
+  };
 
   var originate = function (channel, context, exten, variable, callback) {
     ami.action({
@@ -31,7 +37,7 @@ var Server = function (config) {
     if (!params['exten']) {result = false; console.log('exten', params['exten']);}
     //if (!params['variable']) {result = false; console.log('variable', params['variable']);}
     return result;
-  }
+  };
 
   router.get("/call", function (request, response) {
     var params = request.get;    
@@ -56,7 +62,14 @@ var Server = function (config) {
 
 
   var start = function () {
-    http.createServer(router).listen(config.port);
+    validate(function (err, value) {
+      if (err) {
+        console.log('config.js have errors', err);
+      } else {
+        console.log('config.js validated successfully!');
+        http.createServer(router).listen(config.port);
+      }
+    });    
   };
 
   return {
