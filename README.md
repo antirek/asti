@@ -17,3 +17,21 @@ fetch('http://host:port/call?channel=Local/100@default&context=from-internal&ext
 
 
 `````
+
+
+## Config
+
+`````javascript 
+
+{
+  asterisk: {       //asterisk manager connection
+    port: 5038,
+    host: 'localhost',
+    username: 'amiadmin',
+    password: 'amipassword'
+  },
+  port: 10000     //port of web-interface
+}
+
+
+`````
