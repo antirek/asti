@@ -5,5 +5,8 @@ module.exports = {
     username: 'admin',
     password: 'amp111'
   },
-  port: 10000
+  web: {
+    port: 10000,
+    host: '0.0.0.0'
+  }
 };

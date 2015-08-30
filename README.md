@@ -30,7 +30,10 @@ fetch('http://host:port/call?channel=Local/100@default&context=from-internal&ext
     username: 'amiadmin',
     password: 'amipassword'
   },
-  port: 10000     //port of web-interface
+  web: {
+    port: 10000,        //port of web-interface
+    host: '127.0.0.1'   //not required
+  }
 }
 
 

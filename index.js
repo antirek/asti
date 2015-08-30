@@ -67,7 +67,7 @@ var Server = function (config) {
         console.log('config.js have errors', err);
       } else {
         console.log('config.js validated successfully!');
-        http.createServer(router).listen(config.port);
+        http.createServer(router).listen(config.web.port, config.web.host);
       }
     });    
   };
