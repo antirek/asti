@@ -13,11 +13,7 @@ send http-request and make orginate via AMI to asterisk
 
 `````javascript
 
-
-
-
+fetch('http://host:port/call?channel=Local/100@default&context=from-internal&exten=89135292926');
 
 
 `````
-
-
