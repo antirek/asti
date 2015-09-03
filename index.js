@@ -22,7 +22,21 @@ var Server = function (config) {
         Joi.validate(config, ConfigSchema, callback);
     };
 
-    var router = new Router();
+    var router = new Router(asterisk);
+
+    var appendListeners = function (io) {
+      io.on('connection', function (socket) {
+        var client = new Client({socket: socket});
+              
+        client.on('subscribe', function (data) {
+          pool.addClient(data.interface, client);
+        });
+
+        client.on('unsubscribe', function (data) {
+          pool.removeClient(client);
+        });
+      });
+    };
 
     var start = function () {
         validate(function (err, value) {
@@ -33,20 +47,7 @@ var Server = function (config) {
                 var app = http.createServer(router);
                 var io = socket_io(app);
                 app.listen(config.web.port, config.web.host);
-                //http.createServer(router).listen(config.web.port, config.web.host);
-                
-                io.on('connection', function (socket) {
-                  var client = new Client({socket: socket});
-                        
-                  client.on('subscribe', function (data) {
-                    pool.addClient(data.interface, client);
-                  });
-
-                  client.on('unsubscribe', function (data) {
-                    pool.removeClient(client);
-                  });
-                });
-
+                appendListeners(io);
             }
         });
     };
