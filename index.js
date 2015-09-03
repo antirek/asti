@@ -1,6 +1,5 @@
 'use strict';
 
-var AsteriskManager = require('asterisk-manager');
 var http = require('http');
 var Joi = require('joi');
 var socket_io = require('socket.io');
