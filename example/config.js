@@ -1,5 +1,5 @@
 module.exports = {
-  asterisk: {
+  ami: {
     port: 5038,
     host: 'localhost',
     username: 'admin',
@@ -8,5 +8,6 @@ module.exports = {
   web: {
     port: 10000,
     host: '0.0.0.0'
-  }
+  },
+  key_field: 'interface'
 };

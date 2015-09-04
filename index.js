@@ -14,47 +14,52 @@ var Client = require('./lib/client');
 
 var Server = function (config) {
 
-    var pool = new Pool();
-    var asterisk = new Asterisk(pool, config.asterisk);
-
     var validate = function (callback) {
-        Joi.validate(config, ConfigSchema, callback);
+      Joi.validate(config, ConfigSchema, callback);
     };
 
-    var router = new Router(asterisk);
+    var init = function () {
 
-    var appendListeners = function (io) {
-      io.on('connection', function (socket) {
-        var client = new Client({socket: socket});
-              
-        client.on('subscribe', function (data) {
-          pool.addClient(data.interface, client);
-        });
+      var appendListeners = function (io) {
+        io.on('connection', function (socket) {
+          var client = new Client({socket: socket});
+                
+          client.on('subscribe', function (data) {
+            console.log(data);
+            pool.addClient(data.agent, client);
+          });
 
-        client.on('unsubscribe', function (data) {
-          pool.removeClient(client);
+          client.on('unsubscribe', function (data) {
+            pool.removeClient(client);
+          });
         });
-      });
+      };
+
+      var pool = new Pool();
+      var asterisk = new Asterisk(pool, config);
+      var router = new Router(asterisk);
+
+      var app = http.createServer(router);
+      var io = socket_io(app);
+      app.listen(config.web.port, config.web.host);
+      appendListeners(io);
+   
     };
 
     var start = function () {
-        validate(function (err, value) {
-            if (err) {
-                console.log('config.js have errors', err);
-            } else {
-                console.log('config.js validated successfully!');
-                var app = http.createServer(router);
-                var io = socket_io(app);
-                app.listen(config.web.port, config.web.host);
-                appendListeners(io);
-            }
-        });
+      validate(function (error) {
+        if (error) {
+          console.log('config.js have errors', error);
+        } else {
+          console.log('config.js validated successfully!');
+          init();
+        }
+      });
     };
 
     return {
       start: start
     };
-
 };
 
 module.exports = Server;

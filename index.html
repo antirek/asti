@@ -1,7 +1,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io('http://localhost:10000');
-  socket.emit('subscribe', {interface: 'SIP/6000'});
+  socket.emit('subscribe', {agent: 'SIP/6000'});
 
   var handler = function (data) {
   	console.log(data);
@@ -10,6 +10,8 @@
   socket.on('agentcalled', handler);
   socket.on('agentconnect', handler);
   socket.on('agentcomplete', handler);
-  socket.on('queuecallerabandon', handler);
+  socket.on('agentdump', handler);
+  socket.on('agentringnoanswer', handler);
+
 
 </script>
