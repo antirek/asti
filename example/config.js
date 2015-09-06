@@ -3,7 +3,7 @@ module.exports = {
     port: 5038,
     host: 'localhost',
     username: 'admin',
-    password: 'superpassword'
+    password: 'amp111'
   },
   web: {
     port: 10000,

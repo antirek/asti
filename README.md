@@ -36,5 +36,4 @@ fetch('http://host:port/call?channel=Local/100@default&context=from-internal&ext
   }
 }
 
-
 `````
