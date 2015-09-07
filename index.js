@@ -24,12 +24,12 @@ var Server = function (config) {
         io.on('connection', function (socket) {
           var client = new Client({socket: socket});
                 
-          client.on('subscribe', function (data) {
+          client.on('subscribeAgentEvents', function (data) {
             console.log(data);
             pool.addClient(data.agent, client);
           });
 
-          client.on('unsubscribe', function (data) {
+          client.on('unsubscribeAgentEvents', function (data) {
             pool.removeClient(client);
           });
         });
