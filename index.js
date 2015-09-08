@@ -10,7 +10,7 @@ var Asterisk = require('./lib/asterisk');
 var Router = require('./lib/router');
 var Pool = require('./lib/pool');
 var Client = require('./lib/client');
-
+var AgentEventsHandler = require('./lib/agentEventsHandler');
 
 var Server = function (config) {
 
@@ -32,12 +32,21 @@ var Server = function (config) {
           client.on('unsubscribeAgentEvents', function (data) {
             pool.removeClient(client);
           });
+
         });
       };
 
-      var pool = new Pool();
-      var asterisk = new Asterisk(pool, config);
+      var asterisk = new Asterisk(config.ami);
       var router = new Router(asterisk);
+
+      var pool = new Pool();      
+      var handler = new AgentEventsHandler(pool, config.ami.version);
+      
+      asterisk.on('agentcalled', handler.handle);
+      asterisk.on('agentcomplete', handler.handle);
+      asterisk.on('agentconnect', handler.handle);
+      asterisk.on('agentringnoanswer', handler.handle);
+
 
       var app = http.createServer(router);
       var io = socket_io(app);
