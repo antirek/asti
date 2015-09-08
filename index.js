@@ -6,7 +6,7 @@ var socket_io = require('socket.io');
 
 
 var ConfigSchema = require('./lib/configSchema');
-var Asterisk = require('./lib/asterisk');
+var AmiConnection = require('./lib/amiConnection');
 var Router = require('./lib/router');
 var Pool = require('./lib/pool');
 var Client = require('./lib/client');
@@ -21,40 +21,35 @@ var Server = function (config) {
 
     var init = function () {
 
-      var appendListeners = function (io) {
+      var appendListeners = function (io, pool) {
         io.on('connection', function (socket) {
           var client = new Client({socket: socket});
                 
-          client.on('subscribeAgentEvents', function (data) {
+          client.on('agent:subscribe', function (data) {
             console.log(data);
             pool.addClient(data.agent, client);
           });
 
-          client.on('unsubscribeAgentEvents', function (data) {
+          client.on('agent:unsubscribe', function (data) {
             pool.removeClient(client);
           });
 
         });
       };
 
-      var asterisk = new Asterisk(config.ami);
-      var call = new Call(asterisk);
+      var amiConnection = new AmiConnection(config.ami);
+      var call = new Call(amiConnection);
       var router = new Router(call);
 
-      var pool = new Pool();      
-      var handler = new AgentEventsHandler(pool, config.ami.version);
-      
-      asterisk.on('agentcalled', handler.handle);
-      asterisk.on('agentcomplete', handler.handle);
-      asterisk.on('agentconnect', handler.handle);
-      asterisk.on('agentringnoanswer', handler.handle);
+      var pool = new Pool();
+      var handler = new AgentEventsHandler(amiConnection, pool, config.ami.version);
 
 
       var app = http.createServer(router);
       var io = socket_io(app);
       app.listen(config.web.port, config.web.host);
-      appendListeners(io);
-   
+      appendListeners(io, pool);
+
     };
 
     var start = function () {
