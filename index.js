@@ -11,6 +11,7 @@ var Router = require('./lib/router');
 var Pool = require('./lib/pool');
 var Client = require('./lib/client');
 var AgentEventsHandler = require('./lib/agentEventsHandler');
+var Call = require('./lib/call');
 
 var Server = function (config) {
 
@@ -37,7 +38,8 @@ var Server = function (config) {
       };
 
       var asterisk = new Asterisk(config.ami);
-      var router = new Router(asterisk);
+      var call = new Call(asterisk);
+      var router = new Router(call);
 
       var pool = new Pool();      
       var handler = new AgentEventsHandler(pool, config.ami.version);
