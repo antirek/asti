@@ -10,6 +10,7 @@ var Router = require('./lib/router');
 var Pool = require('./lib/pool');
 var AgentEventsHandler = require('./lib/agentEventsHandler');
 var Call = require('./lib/call');
+var QueueCommand = require('./lib/queue');
 var ioHandler = require('./lib/ioHandler');
 
 var Server = function (config) {
@@ -28,9 +29,11 @@ var Server = function (config) {
 
     var app = http.createServer(router);
     var io = socket_io(app);
-    ioHandler(io, pool);
+    var queueCommand = new QueueCommand(amiConnection);
 
-    app.listen(config.web.port, config.web.host);      
+    ioHandler(io, pool, queueCommand);
+
+    app.listen(config.web.port, config.web.host); 
   };
 
   var start = function () {
