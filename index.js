@@ -8,7 +8,6 @@ var ConfigSchema = require('./lib/configSchema');
 var AmiConnection = require('./lib/amiConnection');
 var Router = require('./lib/router');
 var Pool = require('./lib/pool');
-var Client = require('./lib/client');
 var AgentEventsHandler = require('./lib/agentEventsHandler');
 var Call = require('./lib/call');
 var ioHandler = require('./lib/ioHandler');
