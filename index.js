@@ -29,7 +29,7 @@ var Server = function (config) {
 
     var app = http.createServer(router);
     var io = socket_io(app);
-    var queueCommand = new QueueCommand(amiConnection);
+    var queueCommand = new QueueCommand(amiConnection, config);
 
     ioHandler(io, pool, queueCommand);
 
