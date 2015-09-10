@@ -1,22 +1,17 @@
 # asti
 
-proxy between asterisk and web-client
+proxy between asterisk and web-client for integration
 
-send http-request and make orginate via AMI to asterisk
 
 ## Install
 
-> npm install asti
+> npm install asti --save
 
 
 ## Usage
 
-`````javascript
+Use client lib - asti.js [https://github.com/antirek/asti.js]
 
-fetch('http://host:port/call?channel=Local/100@default&context=from-internal&exten=89135292926');
-
-
-`````
 
 
 ## Config
@@ -28,11 +23,12 @@ fetch('http://host:port/call?channel=Local/100@default&context=from-internal&ext
     port: 5038,
     host: 'localhost',
     username: 'amiadmin',
-    password: 'amipassword'
+    password: 'amipassword',
+    version: '11'   // also ['1.8', '11', '13']
   },
   web: {
     port: 10000,        //port of web-interface
-    host: '127.0.0.1'   //not required
+    host: '127.0.0.1'   //not required, for any 0.0.0.0
   }
 }
 
