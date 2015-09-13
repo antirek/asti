@@ -2,10 +2,10 @@ module.exports = {
   
   ami: {
     port: 5038,
-    host: 'p01.mobilon.ru',
-    username: 'amiadmin',
-    password: 'kug09han',
-    version: '1.8'
+    host: 'localhost',
+    username: 'admin',
+    password: 'amp111',
+    version: '11'
   },
   
   /*/
