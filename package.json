@@ -20,6 +20,7 @@
   "dependencies": {
     "asterisk-manager": "^0.1.15",
     "hashmap": "^2.0.3",
+    "http-post": "^0.1.1",
     "joi": "^6.6.1",
     "node-simple-router": "^0.9.4-2",
     "node-uuid": "^1.4.3",

@@ -4,6 +4,7 @@ var http = require('http');
 var Joi = require('joi');
 var socket_io = require('socket.io');
 
+
 var ConfigSchema = require('./lib/configSchema');
 var AmiConnection = require('./lib/amiConnection');
 var Router = require('./lib/router');
@@ -12,6 +13,7 @@ var AgentEventsHandler = require('./lib/agentEventsHandler');
 var Call = require('./lib/call');
 var QueueCommand = require('./lib/queue');
 var ioHandler = require('./lib/ioHandler');
+var UrlFetcher = require('./lib/request');
 
 var Server = function (config) {
 
@@ -30,10 +32,11 @@ var Server = function (config) {
     var app = http.createServer(router);
     var io = socket_io(app);
     var queueCommand = new QueueCommand(amiConnection, config);
+    var urlFetcher = new UrlFetcher({baseUrl: config.baseUrl});
 
-    ioHandler(io, pool, queueCommand);
+    ioHandler(io, pool, queueCommand, urlFetcher);
 
-    app.listen(config.web.port, config.web.host); 
+    app.listen(config.web.port, config.web.host);
   };
 
   var start = function () {
