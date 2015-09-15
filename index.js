@@ -34,7 +34,7 @@ var Server = function (config) {
     var queueCommand = new QueueCommand(amiConnection, config);
     var urlFetcher = new UrlFetcher({baseUrl: config.baseUrl});
 
-    ioHandler(io, pool, queueCommand, urlFetcher);
+    ioHandler(io, pool, queueCommand, urlFetcher, call);
 
     app.listen(config.web.port, config.web.host);
   };

@@ -1,5 +1,5 @@
 module.exports = {
- 
+ /*
   ami: {
     port: 5038,
     host: 'localhost',
@@ -8,7 +8,7 @@ module.exports = {
     version: '11'
   },
   
-  /*/
+  */
 
   ami: {
     port: 5038,
@@ -17,10 +17,10 @@ module.exports = {
     password: 'superpassword',
     version: '13'
   },
-  */
+  
   web: {
     port: 10000,
     host: '0.0.0.0'
   },
-  baseUrl: 'http://www.google.com/'
+  baseUrl: 'http://localhost:8090/'
 };
