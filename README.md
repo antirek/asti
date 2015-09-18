@@ -38,13 +38,17 @@ Use client lib - asti.js [https://github.com/antirek/asti.js]
 
 Work asterisk dialplan:
 
-`````sh
+`````ini
+
+[outbound]
+exten=_XXX,1,Dial(SIP/{EXTEN},,Ttr)
+exten=_8XXXXXXXXXX,1,Dial(SIP/{EXTEN}@gate,,Ttr)
 
 [outbound1]
-exten=>_X.,1,Dial(SIP/${EXTEN},,U(pretech,answer1,${ORIGINATE_ACTIONID}))
+exten=>_X.,1,Dial(Local/${EXTEN}@outbound,,U(pretech,answer1,${ORIGINATE_ACTIONID}))
 
 [outbound2]
-exten=>_X.,1,Dial(SIP/${EXTEN},,U(pretech,answer2,${ORIGINATE_ACTIONID}))
+exten=>_X.,1,Dial(Local/${EXTEN}@outbound,,U(pretech,answer2,${ORIGINATE_ACTIONID}))
 
 [pretech]
 exten=s,1,NoOp(pretech)
