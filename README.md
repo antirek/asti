@@ -33,3 +33,22 @@ Use client lib - asti.js [https://github.com/antirek/asti.js]
 }
 
 `````
+
+## Originate
+
+Work asterisk dialplan:
+
+`````sh
+
+[outbound1]
+exten=>_X.,1,Dial(SIP/${EXTEN},,U(pretech,answer1,${ORIGINATE_ACTIONID}))
+
+[outbound2]
+exten=>_X.,1,Dial(SIP/${EXTEN},,U(pretech,answer2,${ORIGINATE_ACTIONID}))
+
+[pretech]
+exten=s,1,NoOp(pretech)
+exten=s,n,UserEvent(${ARG1},actionid:${ARG2}).
+exten=s,n,Return()
+
+`````
