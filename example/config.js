@@ -12,10 +12,10 @@ module.exports = {
 
   ami: {
     port: 5038,
-    host: 'localhost',
-    username: 'admin',
-    password: 'superpassword',
-    version: '13'
+    host: '127.0.0.1',
+    username: 'amiadmin',
+    password: '123456',
+    version: '1.8'
   },
   
   web: {
