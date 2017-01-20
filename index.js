@@ -3,7 +3,7 @@
 var http = require('http');
 var Joi = require('joi');
 var socket_io = require('socket.io');
-
+var console = require('tracer').colorConsole();
 
 var ConfigSchema = require('./lib/configSchema');
 var AmiConnection = require('./lib/amiConnection');
